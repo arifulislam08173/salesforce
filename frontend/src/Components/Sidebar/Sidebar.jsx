@@ -22,7 +22,8 @@ import {
 import {
   Menu as MenuIcon,
   Dashboard as DashboardIcon,
-  ShoppingCart as ShoppingCartIcon,
+  // ShoppingCart as ShoppingCartIcon,
+  AddShoppingCart as AddShoppingCartIcon,
   People as PeopleIcon,
   Inventory as InventoryIcon,
   Store as StoreIcon,
@@ -135,19 +136,19 @@ const Sidebar = ({ children }) => {
     },
     { 
       text: "Create Purchase order", 
-      icon: <ShoppingCartIcon />, 
+      icon: <AddShoppingCartIcon />, 
       path: "/create-purchase-order" 
     },
     { 
       text: "Purchase Orders", 
-      icon: <ShoppingCartIcon />, 
+      icon: <InventoryIcon />, 
       path: "/purchase-orders" 
     },
-    { 
-      text: "Purchase Order Details", 
-      icon: <InventoryIcon />, 
-      path: "/purchase-orders-details" 
-    },
+    // { 
+    //   text: "Purchase Order Details", 
+    //   icon: <InventoryIcon />, 
+    //   path: "/purchase-orders-details" 
+    // },
     { 
       text: "Organizations", 
       icon: <StoreIcon />, 

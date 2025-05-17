@@ -5,7 +5,7 @@ import Dashboard from "../Pages/Dashboard/Dashboard";
 import Employees from "../Pages/Employee/Employee";
 import Organizations from "../Pages/Organizations/Organizations";
 import PurchaseOrders from "../Pages/PurchaseOrder/PurchaseOrder";
-import PurchaseOrderDetails from "../Pages/PurchaseOrderDetails/PurchaseOrderDetails";
+// import PurchaseOrderDetails from "../Pages/PurchaseOrderDetails/PurchaseOrderDetails";
 import InvProducts from "../Pages/InventoryProduct/InvProduct";
 import CreatePurchaseOrder from "../Pages/CreatePurchaseOrder/CreatePurchaseorder";
 
@@ -38,10 +38,10 @@ const router = createBrowserRouter([
     path: "purchase-orders",
     element: <PurchaseOrders />,
   },
-  {
-    path: "purchase-orders-details",
-    element: <PurchaseOrderDetails />,
-  },
+  // {
+  //   path: "purchase-orders-details",
+  //   element: <PurchaseOrderDetails />,
+  // },
   {
     path: "inventory-product",
     element: <InvProducts />,
