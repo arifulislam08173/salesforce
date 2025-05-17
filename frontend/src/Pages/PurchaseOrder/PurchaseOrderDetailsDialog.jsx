@@ -98,8 +98,7 @@ const PurchaseOrderDetailsDialog = ({
                 color: "#6b7280",
               }}
             >
-              No product details found for Purchase Order ID {selectedPoId} (PO No: {selectedPo?.po_no || "N/A"}). Please
-              verify that purchase_order_detail.po_id matches the PurchaseOrder.po_id in the database.
+              No product details found for Purchase Order ID {selectedPoId}
             </Typography>
           ) : (
             <TableContainer sx={{ maxHeight: "400px", overflowY: "auto" }}>
