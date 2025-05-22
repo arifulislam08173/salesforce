@@ -42,6 +42,7 @@ app.delete('/api/organization/:id', verifyToken, OrganizationController.deleteOr
 // Routes for PurchaseOrder
 app.post('/api/purchaseorder', verifyToken, PurchaseOrderController.createPurchaseOrder);
 app.get('/api/purchaseorder', verifyToken, PurchaseOrderController.getAllPurchaseOrders);
+app.get('/api/purchaseorder/search', verifyToken, PurchaseOrderController.searchPurchaseOrders);
 app.get('/api/purchaseorder/:id', verifyToken, PurchaseOrderController.getPurchaseOrderById);
 app.put('/api/purchaseorder/:id', verifyToken, PurchaseOrderController.updatePurchaseOrder);
 app.delete('/api/purchaseorder/:id', verifyToken, PurchaseOrderController.deletePurchaseOrder);

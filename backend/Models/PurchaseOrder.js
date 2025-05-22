@@ -79,18 +79,20 @@ const PurchaseOrder = sequelize.define('PurchaseOrder', {
   created: {
     type: DataTypes.DATE,
     allowNull: true, 
+    defaultValue: DataTypes.NOW, 
   },
   created_by: {
     type: DataTypes.STRING(50),
-    allowNull: true, 
+    allowNull: true,
   },
   modified: {
     type: DataTypes.DATE,
     allowNull: true, 
+    defaultValue: DataTypes.NOW, 
   },
   modified_by: {
     type: DataTypes.STRING(50),
-    allowNull: true, 
+    allowNull: true,
   },
   po_id: {
     type: DataTypes.INTEGER,

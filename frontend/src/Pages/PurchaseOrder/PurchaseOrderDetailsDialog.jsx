@@ -106,7 +106,7 @@ const PurchaseOrderDetailsDialog = ({
                 <TableHead>
                   <TableRow>
                     {[
-                      "Line #",
+                      "Line",
                       "Product",
                       "Quantity",
                       "Unit Price",

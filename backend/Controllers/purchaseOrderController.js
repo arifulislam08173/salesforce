@@ -1,5 +1,7 @@
 const PurchaseOrder = require('../Models/PurchaseOrder');
 const Organization = require('../Models/Organization');
+const { Op } = require('sequelize');
+
 
 // Create a new Purchase Order
 const createPurchaseOrder = async (req, res) => {
@@ -29,6 +31,8 @@ const createPurchaseOrder = async (req, res) => {
       created_by,
       modified_by,
       po_id,
+      created: new Date(),
+      modified: new Date(),
     });
 
     res.status(201).json({
@@ -82,7 +86,7 @@ const updatePurchaseOrder = async (req, res) => {
       {
         po_no, po_date, po_type, pay_mode, discount, sub_total, grand_total,
         vds_total, tds_total, vendor_id, store_id, currency, subject, remarks,
-        company_code, modified_by, po_id
+        company_code, modified_by, po_id, modified: new Date(),
       },
       { where: { id } }
     );
@@ -118,10 +122,43 @@ const deletePurchaseOrder = async (req, res) => {
   }
 };
 
+const searchPurchaseOrders = async (req, res) => {
+  const { query } = req.query;
+
+  if (!query || query.trim() === '') {
+    try {
+      const purchaseOrders = await PurchaseOrder.findAll();
+      return res.status(200).json(purchaseOrders);
+    } catch (error) {
+      console.error('Error fetching all purchase orders:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+
+  try {
+    const purchaseOrders = await PurchaseOrder.findAll({
+      where: {
+        [Op.or]: [
+          { po_no: { [Op.like]: `%${query}%` } },
+          { po_type: { [Op.like]: `%${query}%` } },
+          { pay_mode: { [Op.like]: `%${query}%` } },
+          { company_code: { [Op.like]: `%${query}%` } },
+        ],
+      },
+    });
+
+    res.status(200).json(purchaseOrders);
+  } catch (error) {
+    console.error('Error searching purchase orders:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 module.exports = {
   createPurchaseOrder,
   getAllPurchaseOrders,
   getPurchaseOrderById,
   updatePurchaseOrder,
   deletePurchaseOrder,
+  searchPurchaseOrders,
 };

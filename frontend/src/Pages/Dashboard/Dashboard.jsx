@@ -124,8 +124,8 @@ const Dashboard = () => {
 
   return (
     <Sidebar>
-      <Box sx={{ width: "100%", p: 2 }}>
-        <Grid container spacing={3} sx={{ mb: 4, alignItems: 'stretch' }}>
+      <Box sx={{ width: "100%" }}>
+        <Grid container spacing={2} sx={{ mb: 4, alignItems: 'stretch' }}>
           {cards.map((card, index) => (
             <Grid item xs={12} sm={6} md={3} key={index} sx={{ display: 'flex' }}>
               <Card
