@@ -1,4 +1,6 @@
 const InvProduct = require('../Models/InvProduct');
+const { Op } = require('sequelize');
+
 
 // Create a new InvProduct
 const createInvProduct = async (req, res) => {
@@ -126,10 +128,37 @@ const deleteInvProduct = async (req, res) => {
   }
 };
 
+const searchInvProducts = async (req, res) => {
+  const { query } = req.query;
+
+  // Require at least 2 characters for search
+  if (!query || query.trim().length < 2) {
+    return res.status(400).json({ error: 'Query must be at least 2 characters long' });
+  }
+
+  try {
+    const products = await InvProduct.findAll({
+      where: {
+        [Op.or]: [
+          { name: { [Op.like]: `%${query}%` } },
+          { code: { [Op.like]: `%${query}%` } },
+        ],
+      },
+      limit: 50, // Limit results for performance
+    });
+
+    res.status(200).json(products);
+  } catch (error) {
+    console.error('Error searching products:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 module.exports = {
   createInvProduct,
   getAllInvProducts,
   getInvProductById,
   updateInvProduct,
   deleteInvProduct,
+  searchInvProducts,
 };

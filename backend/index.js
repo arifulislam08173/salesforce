@@ -34,6 +34,7 @@ app.delete('/api/employee/:id', verifyToken, EmployeeController.deleteEmployee);
 // Routes for Organization
 app.post('/api/organization', verifyToken, OrganizationController.createOrganization); 
 app.get('/api/organization', verifyToken, OrganizationController.getAllOrganizations); 
+app.get('/api/organization/search', verifyToken, OrganizationController.searchOrganizations);
 app.get('/api/organization/:id', verifyToken, OrganizationController.getOrganizationById);
 app.put('/api/organization/:id', verifyToken, OrganizationController.updateOrganization); 
 app.delete('/api/organization/:id', verifyToken, OrganizationController.deleteOrganization);
@@ -60,6 +61,7 @@ app.delete('/api/purchaseorderdetail/:id', verifyToken, PurchaseOrderDetailContr
 // Routes for InvProduct
 app.post('/api/invproduct', verifyToken, InvProductController.createInvProduct);
 app.get('/api/invproduct', verifyToken, InvProductController.getAllInvProducts);
+app.get('/api/invproduct/search', verifyToken, InvProductController.searchInvProducts);
 app.get('/api/invproduct/:id', verifyToken, InvProductController.getInvProductById);
 app.put('/api/invproduct/:id', verifyToken, InvProductController.updateInvProduct);
 app.delete('/api/invproduct/:id', verifyToken, InvProductController.deleteInvProduct);

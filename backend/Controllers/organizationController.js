@@ -1,4 +1,5 @@
 const Organization = require('../Models/Organization');
+const { Op } = require('sequelize');
 
 // Create Organization
 const createOrganization = async (req, res) => {
@@ -132,10 +133,38 @@ const deleteOrganization = async (req, res) => {
   }
 };
 
+
+const searchOrganizations = async (req, res) => {
+  const { query } = req.query;
+
+  // Require at least 2 characters for search
+  if (!query || query.trim().length < 2) {
+    return res.status(400).json({ error: 'Query must be at least 2 characters long' });
+  }
+
+  try {
+    const organizations = await Organization.findAll({
+      where: {
+        [Op.or]: [
+          { name: { [Op.like]: `%${query}%` } },
+          { code: { [Op.like]: `%${query}%` } },
+        ],
+      },
+      limit: 50, // Limit results for performance
+    });
+
+    res.status(200).json(organizations);
+  } catch (error) {
+    console.error('Error searching organizations:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 module.exports = {
   createOrganization,
   getAllOrganizations,
   getOrganizationById,
   updateOrganization,
   deleteOrganization,
+  searchOrganizations,
 };
