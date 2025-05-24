@@ -1310,7 +1310,8 @@ const EditPurchaseOrderDialog = ({
                 name="discount"
                 type="number"
                 value={poForm.discount}
-                onChange={handlePoFormChange}
+                // onChange={handlePoFormChange}
+                disabled
                 size="small"
                 sx={{ bgcolor: "#ffffff", borderRadius: "8px" }}
               />
