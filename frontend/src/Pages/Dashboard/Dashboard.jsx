@@ -56,7 +56,8 @@ const Dashboard = () => {
         setTotals({
           employees: employeesRes.data.length,
           organizations: organizationsRes.data.length,
-          purchaseOrders: purchaseOrdersRes.data.length,
+          // purchaseOrders: purchaseOrdersRes.data.length,
+          purchaseOrders: purchaseOrdersRes.data.pagination.totalItems,
           purchaseOrderDetails: purchaseOrderDetailsRes.data.length,
           invProducts: invProductsRes.data.length,
         });
