@@ -12,7 +12,7 @@ const createPurchaseOrder = async (req, res) => {
   } = req.body;
 
   try {
-    // Generate po_no (e.g., PO1, PO2, etc.) based on existing data
+    // Generate po_no
     const lastPo = await PurchaseOrder.findOne({
       order: [['id', 'DESC']],
       attributes: ['po_no']
@@ -20,7 +20,7 @@ const createPurchaseOrder = async (req, res) => {
     let poNumber = 'PO1'; // Default starting value
     if (lastPo && lastPo.po_no) {
       const lastNumber = parseInt(lastPo.po_no.replace('PO', '')) || 0;
-      poNumber = `PO${lastNumber + 1}`; // Match existing format (PO1, PO2, ...)
+      poNumber = `PO${lastNumber + 1}`;
     }
 
     // Get user ID from JWT
@@ -50,7 +50,7 @@ const createPurchaseOrder = async (req, res) => {
       modified_by: userId.toString(),
       created: new Date(),
       modified: new Date(),
-      po_id: null // Will be updated after creation
+      po_id: null
     });
 
     // Set po_id to the newly created purchase order's id
@@ -86,7 +86,7 @@ const updatePurchaseOrder = async (req, res) => {
       return res.status(400).json({ error: 'Purchase Order number is required' });
     }
 
-    // Check for po_no uniqueness (exclude current PO)
+    // Check for po_no uniqueness
     const existingPo = await PurchaseOrder.findOne({
       where: { po_no, id: { [Op.ne]: id } },
     });
@@ -113,7 +113,7 @@ const updatePurchaseOrder = async (req, res) => {
         company_code: company_code || null,
         modified_by: userId.toString(),
         modified: new Date(),
-        po_id: parseInt(id) // Ensure po_id remains the same as id
+        po_id: parseInt(id)
       },
       { where: { id } }
     );
