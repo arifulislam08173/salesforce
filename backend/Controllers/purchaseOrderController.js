@@ -182,7 +182,7 @@ const deletePurchaseOrder = async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Start a transaction
+    // transaction
     const result = await sequelize.transaction(async (t) => {
       // Find the Purchase Order
       const purchaseOrder = await PurchaseOrder.findByPk(id, { transaction: t });
@@ -190,28 +190,28 @@ const deletePurchaseOrder = async (req, res) => {
         return { error: 'Purchase Order not found', status: 404 };
       }
 
-      // Check for child PurchaseOrder records
+      // Check for child PurchaseOrder
       const childOrdersCount = await PurchaseOrder.count({
         where: { po_id: id },
         transaction: t,
       });
 
       if (childOrdersCount > 0) {
-        // Set po_id to null for child records
+        // Set po_id to null
         await PurchaseOrder.update(
           { po_id: null },
           { where: { po_id: id }, transaction: t }
         );
       }
 
-      // Check for associated PurchaseOrderDetails
+      // Check PurchaseOrderDetails
       const detailsCount = await PurchaseOrderDetail.count({
         where: { po_id: id },
         transaction: t,
       });
 
       if (detailsCount > 0) {
-        // Delete associated PurchaseOrderDetails
+        // Delete PurchaseOrderDetails
         await PurchaseOrderDetail.destroy({
           where: { po_id: id },
           transaction: t,

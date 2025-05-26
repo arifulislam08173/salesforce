@@ -86,6 +86,7 @@ const PurchaseOrders = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [poToDelete, setPoToDelete] = useState(null);
   const [deleteError, setDeleteError] = useState(null);
+  const [limit, setLimit] = useState(25);
 
   const authCheked = () => {
     const token = localStorage.getItem("authToken");
@@ -143,17 +144,18 @@ const PurchaseOrders = () => {
     fetchPurchaseOrders(1);
   }, []);
 
-  const fetchPurchaseOrders = async (pageNum) => {
+  const fetchPurchaseOrders = async (pageNum, limit = 25) => {
     setLoading(true);
     try {
       const response = await axios.get("http://localhost:5000/api/purchaseorder", {
-        params: { page: pageNum, limit: 25 },
+        params: { page: pageNum, limit },
         headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
       });
       const purchaseOrders = Array.isArray(response.data.purchaseOrders) ? response.data.purchaseOrders : [];
       setPurchaseOrders(purchaseOrders);
       setTotalItems(response.data.pagination?.totalItems || 0);
       setPage(pageNum - 1);
+      setLimit(limit);
     } catch (err) {
       console.error("Error fetching purchase orders:", err);
       setError("Failed to fetch purchase orders");
@@ -163,17 +165,18 @@ const PurchaseOrders = () => {
     }
   };
 
-  const searchPurchaseOrders = async (query, pageNum) => {
+  const searchPurchaseOrders = async (query, pageNum, limit = 25) => {
     setSearchLoading(true);
     try {
       const response = await axios.get("http://localhost:5000/api/purchaseorder/search", {
-        params: { query, page: pageNum, limit: 25 },
+        params: { query, page: pageNum, limit },
         headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
       });
       const purchaseOrders = Array.isArray(response.data.purchaseOrders) ? response.data.purchaseOrders : [];
       setPurchaseOrders(purchaseOrders);
       setTotalItems(response.data.pagination?.totalItems || 0);
       setPage(pageNum - 1);
+      setLimit(limit);
     } catch (err) {
       console.error("Error searching purchase orders:", err);
       const errorMessage = err.response?.data?.error || "Failed to search purchase orders";
@@ -194,6 +197,7 @@ const PurchaseOrders = () => {
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchTerm(query);
+    // searchPurchaseOrders(query, 1);
     debouncedSearch(query, 1);
   };
 
@@ -270,9 +274,9 @@ const PurchaseOrders = () => {
     setPage(newPage - 1);
     const pageNum = newPage;
     if (searchTerm.trim().length >= 2) {
-      searchPurchaseOrders(searchTerm, pageNum);
+      searchPurchaseOrders(searchTerm, pageNum,limit);
     } else {
-      fetchPurchaseOrders(pageNum);
+      fetchPurchaseOrders(pageNum, limit);
     }
   };
 
@@ -1027,7 +1031,7 @@ const PurchaseOrders = () => {
                 }}
               >
                 <Pagination
-                  count={Math.ceil(totalItems / 25)}
+                  count={Math.ceil(totalItems / limit)}
                   page={page + 1}
                   onChange={handleChangePage}
                   sx={{
