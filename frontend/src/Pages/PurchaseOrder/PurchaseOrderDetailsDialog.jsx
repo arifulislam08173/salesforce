@@ -61,7 +61,7 @@ const PurchaseOrderDetailsDialog = ({
           borderBottom: "1px solid #e5e7eb",
         }}
       >
-        Purchase Order Details - PO #{selectedPo?.po_no || "N/A"}
+        Purchase Order Details - #{selectedPo?.po_no || "N/A"}
       </DialogTitle>
       <DialogContent sx={{ p: { xs: 2, sm: 4 }, bgcolor: "#f9fafb" }}>
         <Paper

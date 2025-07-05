@@ -101,6 +101,7 @@ const PurchaseOrder = sequelize.define('PurchaseOrder', {
       model: 'purchase_order', 
       key: 'id',
     },
+    onDelete: 'CASCADE',
   },
 }, {
   timestamps: false, 
