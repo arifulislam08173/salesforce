@@ -1448,8 +1448,8 @@ const Sidebar = ({ children }) => {
                 fontFamily: "'Poppins', sans-serif",
               }}
             >
-              {/* SalesForce */}
-              ZForce
+              SalesForce
+              {/* ZForce */}
             </Typography>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
